@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="assets/logo.png">
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <label for="urlInput">Enter URL:</label>
+      <input type="text" id="urlInput" placeholder="https://example.com" />
+      <button onclick="generateQRCode()">Generate QR Code</button>
+      <div id="qrcode"></div>
+      <div id="downloadButtons">
+        <button class="downloadButton" onclick="downloadQRCodeImage()">Download as Image</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2023 Prudvi Raj. All rights reserved.</p>
+      <p>Author: Andoju Prudvi Raj</p>
+      <p>
+        <a href="https://github.com/prudvi4" target="_blank">GitHub</a> |
+        <a href="https://www.linkedin.com/in/andoju-prudvi-raj-a74b5b270/" target="_blank">LinkedIn</a> |
+        <a href="https://prudvi4.github.io/PrudviRajWebsite/" target="_blank">Portfolio</a> 
+      </p>
+    </div>
+  
+
+    <script>
+      function generateQRCode() {
+        var url = document.getElementById("urlInput").value;
+        var qrcodeDiv = document.getElementById("qrcode");
+
+        // Clear previous QR code
+        qrcodeDiv.innerHTML = "";
+
+        // Generate new QR code
+        var qrcode = new QRCode(qrcodeDiv, {
+          text: url,
+          width: 128,
+          height: 128,
+        });
+      }
+      function downloadQRCodeImage() {
+        var url = document.getElementById("urlInput").value;
+        var qrcodeCanvas = document.querySelector("#qrcode canvas");
+
+        // Create an anchor element
+        var downloadLink = document.createElement("a");
+
+        // Set the download attribute and filename
+        downloadLink.download = "qrcode_" + encodeURIComponent(url) + ".png";
+
+        // Convert the canvas to a data URL and set it as the href attribute
+        downloadLink.href = qrcodeCanvas.toDataURL("image/png");
+
+        // Simulate a click on the anchor element to trigger the download
+        downloadLink.click();
+      }
+    </script>
+  </body>
+</html>
